@@ -8,6 +8,7 @@ const openai = new OpenAI({
 
 
 export const generateChatResponse = async (message) => {
+  // api call or other logic related to openai
   const response = await openai.chat.completions.create({
     messages: [
       { role: 'system', content: 'you are a helpful assistant' },
