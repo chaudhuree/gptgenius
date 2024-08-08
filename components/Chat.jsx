@@ -1,13 +1,21 @@
 'use client';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import {generateChatResponse} from '../utils/actions';
+import { useMutation } from '@tanstack/react-query';
 
 const Chat = () => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
 
+  const { mutate } = useMutation({
+    mutationFn: (message) => generateChatResponse(message),
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    mutate(text);
+    setText('');
   };
 
   return (
