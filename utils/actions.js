@@ -6,18 +6,18 @@ const openai = new OpenAI({
 });
 
 
-export const generateChatResponse = async (message) => {
-  // api call or other logic related to openai
-  const response = await openai.chat.completions.create({
-    messages: [
-      { role: 'system', content: 'you are a helpful assistant' },
-      { role: 'user', content: message }
-    ],
-    model: 'gpt-3.5-turbo',
-    temperature: 0,
-  });
-  console.log(response.choices[0].message);
-  console.log(response);
-  
-  return 'awesome';
+export const generateChatResponse = async (chatMessages) => {
+  try {
+    const response = await openai.chat.completions.create({
+      messages: [
+        { role: 'system', content: 'you are a helpful assistant' },
+        ...chatMessages, // for giving context to the AI
+      ],
+      model: 'gpt-3.5-turbo',
+      temperature: 0,
+    });
+    return response.choices[0].message;
+  } catch (error) {
+    return null;
+  }
 };
