@@ -28,21 +28,35 @@ const Chat = () => {
     setMessages((prev) => [...prev, query]);
     setText("");
   };
-  
-/**
- * here messages will be an array of objects with the following structure:
- * [
- * { role: 'user', content: 'do you know about bangladeh?' },
- * { role: 'assistant', content: 'yes, I know about bangladesh,Bangladesh is a country in South Asia' },
- * { role: 'user', content: 'what is the capital of bangladesh?' },
- * { role: 'assistant', content: 'The capital of Bangladesh is Dhaka.' }, 
- * ]
- * 
- */
+
+  /**
+   * here messages will be an array of objects with the following structure:
+   * [
+   * { role: 'user', content: 'do you know about bangladeh?' },
+   * { role: 'assistant', content: 'yes, I know about bangladesh,Bangladesh is a country in South Asia' },
+   * { role: 'user', content: 'what is the capital of bangladesh?' },
+   * { role: 'assistant', content: 'The capital of Bangladesh is Dhaka.' },
+   * ]
+   *
+   */
   return (
     <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto]">
       <div>
-        <h2 className="text-5xl">messages</h2>
+        {messages.map(({ role, content }, index) => {
+          const avatar = role == "user" ? "👤" : "🤖";
+          const bcg = role == "user" ? "bg-base-200" : "bg-base-100";
+          return (
+            <div
+              key={index}
+              className={` ${bcg} flex py-6 -mx-8 px-8
+               text-xl leading-loose border-b border-base-300`}
+            >
+              <span className="mr-4 ">{avatar}</span>
+              <p className="max-w-3xl">{content}</p>
+            </div>
+          );
+        })}
+        {isPending && <span className="loading"></span>}
       </div>
       <form onSubmit={handleSubmit} className="max-w-4xl pt-12">
         <div className="join w-full">
@@ -54,8 +68,12 @@ const Chat = () => {
             required
             onChange={(e) => setText(e.target.value)}
           />
-          <button className="btn btn-primary join-item" type="submit">
-            ask question
+          <button
+            className="btn btn-primary join-item"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? "please wait" : "ask question"}
           </button>
         </div>
       </form>
