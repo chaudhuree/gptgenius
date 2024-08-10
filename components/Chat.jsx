@@ -9,7 +9,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const { mutate, isPending, data } = useMutation({
     mutationFn: (query) => generateChatResponse([...messages, query]),
-
+    //  save api response to state
     onSuccess: (data) => {
       if (!data) {
         toast.error("Something went wrong...");
@@ -25,6 +25,7 @@ const Chat = () => {
     e.preventDefault();
     const query = { role: "user", content: text };
     mutate(query);
+    //  save user query to state
     setMessages((prev) => [...prev, query]);
     setText("");
   };
