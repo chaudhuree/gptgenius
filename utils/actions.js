@@ -26,7 +26,6 @@ export const getExistingTour = async ({ city, country }) => {
   return null;
 };
 
-// 
 export const generateTourResponse = async ({ city, country }) => {
   const query = `Find a ${city} in this ${country}.
 If ${city} in this ${country} exists, create a list of things families can do in this ${city},${country}. 
